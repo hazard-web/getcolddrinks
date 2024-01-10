@@ -1,0 +1,78 @@
+// Mock data
+const posts = [
+    { id: 1, content: 'Post One' },
+    { id: 2, content: 'Post Two' },
+    { id: 3, content: 'Post Three' },
+];
+
+let lastUserActivityTime = null;
+
+// Function to create a new post (converted to async/await)
+async function createPost(post) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            posts.push(post);
+            resolve(posts);
+        }, 1000);
+    });
+}
+
+// Function to update the user's last activity time (converted to async/await)
+async function updateLastUserActivityTime() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            lastUserActivityTime = new Date();
+            resolve(lastUserActivityTime);
+        }, 1000);
+    });
+}
+
+// Function to delete a post by ID (converted to async/await)
+async function deletePost(postId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const index = posts.findIndex((post) => post.id === postId);
+            if (index !== -1) {
+                posts.splice(index, 1);
+                resolve(posts);
+            } else {
+                reject(new Error('Post not found'));
+            }
+        }, 1000);
+    });
+}
+
+// New promise for getting cold drinks
+async function getColdDrinks() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log('Got cold drinks');
+            resolve();
+        }, 1000);
+    });
+}
+
+// Function to log posts and last activity time
+function logPostsAndActivity() {
+    console.log('All Posts:', posts);
+    console.log('Last User Activity Time:', lastUserActivityTime);
+}
+
+// Example usage with async/await
+async function main() {
+    try {
+        await createPost({ id: 4, content: 'Post Four' });
+        await updateLastUserActivityTime();
+        logPostsAndActivity();
+
+        await getColdDrinks();
+        
+        await deletePost(4);
+        logPostsAndActivity();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Call the main function
+main();
